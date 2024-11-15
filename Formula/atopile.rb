@@ -9,6 +9,13 @@ class Atopile < Formula
 
   head "https://github.com/atopile/atopile.git", branch: "main"
 
+  bottle do
+    root_url "https://ghcr.io/v2/atopile/tap"
+    sha256 cellar: :any,                 arm64_sequoia: "f20c06aeb1cbe0ba8305f0e0e0d8cbd4b2e5dfe7e0171c70c6fea25e16f6858f"
+    sha256 cellar: :any,                 ventura:       "d3b18ce9bc372e09bb45f8973b89b65f683a7c5551ed9dacb70ef328c3ba3ec2"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "160cfdf2dc7c73dd176e1bf88b48c785fa995683f735ebda6cfa560866ed03ef"
+  end
+
   depends_on "cmake" => :build
   depends_on "rust" => :build
   depends_on "libxml2"
