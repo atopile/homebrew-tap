@@ -1,4 +1,4 @@
-# Atopile Tap
+# atopile Tap 🍻
 
 ## How do I install these formulae?
 
