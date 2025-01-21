@@ -1,8 +1,8 @@
-# atopile Tap 🍻
+# `atopile` Tap 🍻
 
 ## How do I install these formulae?
 
-`brew install atopile/tap/<formula>`
+`brew install atopile/tap/<formula>`, typically `brew install atopile/tap/atopile`
 
 Or `brew tap atopile/tap` and then `brew install <formula>`.
 
