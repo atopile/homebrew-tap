@@ -16,6 +16,7 @@ class Atopile < Formula
       def install
         venv = virtualenv_create(libexec, "python3")
         system "#{libexec}/bin/python", "-m", "pip", "install", "#{buildpath}/atopile-0.3.13.dev0-cp313-cp313-macosx_11_0_arm64.whl"
+        bin.install "#{libexec}/bin/ato"
       end
     end
     if Hardware::CPU.intel?
@@ -25,6 +26,7 @@ class Atopile < Formula
       def install
         venv = virtualenv_create(libexec, "python3")
         system "#{libexec}/bin/python", "-m", "pip", "install", "#{buildpath}/atopile-0.3.13.dev0-cp313-cp313-macosx_10_13_x86_64.whl"
+        bin.install "#{libexec}/bin/ato"
       end
     end
   end
@@ -37,6 +39,7 @@ class Atopile < Formula
       def install
         venv = virtualenv_create(libexec, "python3")
         system "#{libexec}/bin/python", "-m", "pip", "install", "#{buildpath}/atopile-0.3.13.dev0-cp313-cp313-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl"
+        bin.install "#{libexec}/bin/ato"
       end
     end
   end
