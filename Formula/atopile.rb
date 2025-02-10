@@ -7,6 +7,7 @@ class Atopile < Formula
   license "MIT"
 
   depends_on "python@3.13"
+  uses_from_macos "zlib"
 
   on_macos do
     if Hardware::CPU.arm?
