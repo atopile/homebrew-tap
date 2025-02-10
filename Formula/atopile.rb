@@ -3,8 +3,8 @@ class Atopile < Formula
 
   desc "Design circuit boards with code"
   homepage "https://atopile.io"
-  license "MIT"
   version "0.3.13.dev0"
+  license "MIT"
 
   depends_on "python@3.13"
 
@@ -14,8 +14,9 @@ class Atopile < Formula
       sha256 "2e636615e62a63033ffce12fe44a27054b965a8311899f0116bfb19baf3b2b77"
 
       def install
-        venv = virtualenv_create(libexec, "python3")
-        system "#{libexec}/bin/python", "-m", "pip", "install", "#{buildpath}/atopile-0.3.13.dev0-cp313-cp313-macosx_11_0_arm64.whl"
+        virtualenv_create(libexec, "python3")
+        system "#{libexec}/bin/python", "-m", "pip", "install", \
+          "#{buildpath}/atopile-0.3.13.dev0-cp313-cp313-macosx_11_0_arm64.whl"
         bin.install "#{libexec}/bin/ato"
       end
     end
@@ -24,8 +25,9 @@ class Atopile < Formula
       sha256 "510a36b3e8a8e989c22450d23f7afc6bd56587909e0242b02637ae740c2283a8"
 
       def install
-        venv = virtualenv_create(libexec, "python3")
-        system "#{libexec}/bin/python", "-m", "pip", "install", "#{buildpath}/atopile-0.3.13.dev0-cp313-cp313-macosx_10_13_x86_64.whl"
+        virtualenv_create(libexec, "python3")
+        system "#{libexec}/bin/python", "-m", "pip", "install", \
+          "#{buildpath}/atopile-0.3.13.dev0-cp313-cp313-macosx_10_13_x86_64.whl"
         bin.install "#{libexec}/bin/ato"
       end
     end
@@ -37,8 +39,9 @@ class Atopile < Formula
       sha256 "f5501eb5ddd06ae78a364180dd671e355a7ece6505acd9acbedd066bd3ab77d6"
 
       def install
-        venv = virtualenv_create(libexec, "python3")
-        system "#{libexec}/bin/python", "-m", "pip", "install", "#{buildpath}/atopile-0.3.13.dev0-cp313-cp313-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl"
+        virtualenv_create(libexec, "python3")
+        system "#{libexec}/bin/python", "-m", "pip", "install", \
+          "#{buildpath}/atopile-0.3.13.dev0-cp313-cp313-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl"
         bin.install "#{libexec}/bin/ato"
       end
     end
