@@ -61,6 +61,6 @@ class Atopile < Formula
 
     output = shell_output("#{bin}/ato --non-interactive build --standalone example.ato:Example 2>&1", 0)
     assert_match "Build successful! 🚀", output
-    assert_predicate testpath/"standalone/default/default.kicad_pcb", :exist?
+    assert_path_exists testpath/"standalone/default/default.kicad_pcb"
   end
 end
