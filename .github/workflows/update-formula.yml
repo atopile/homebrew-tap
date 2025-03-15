@@ -42,7 +42,7 @@ jobs:
         run: |
           gh pr create \
             --title "atopile ${{ inputs.version }}" \
-            --body "This PR updates the `atopile` formula to version ${{ inputs.version }}.
+            --body "This PR updates the \`atopile\` formula to version ${{ inputs.version }}.
 
             This update was automatically triggered by the release workflow." \
             --base main \
