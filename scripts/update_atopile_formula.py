@@ -42,6 +42,7 @@ class WheelType(Enum):
     MACOS_INTEL = "macos_intel"
     LINUX_X86_64 = "linux_x86_64"
     MUSL_LINUX_X86_64 = "musl_linux_x86_64"
+    WINDOWS_AMD64 = "windows_amd64"
 
 
 @dataclass
@@ -59,6 +60,8 @@ class WheelInfo:
             return WheelType.LINUX_X86_64
         elif re.search(r"musllinux.*_x86_64", self.filename):
             return WheelType.MUSL_LINUX_X86_64
+        elif re.search(r"win_amd64", self.filename):
+            return WheelType.WINDOWS_AMD64
         else:
             raise ValueError(f"Unknown wheel type: {self.filename}")
 
@@ -73,14 +76,14 @@ def get_wheel_info(release_info: list[UrlInfo]) -> list[WheelInfo]:
         for url_info in release_info
         if url_info["packagetype"] == "bdist_wheel"
     ]
-
     wheel_types = [wheel.get_type() for wheel in wheels]
 
     assert WheelType.MACOS_ARM in wheel_types
     assert WheelType.MACOS_INTEL in wheel_types
     assert WheelType.LINUX_X86_64 in wheel_types
     assert WheelType.MUSL_LINUX_X86_64 in wheel_types
-    assert len(wheels) == 4
+    assert WheelType.WINDOWS_AMD64 in wheel_types
+    assert len(wheels) == 5
 
     return wheels
 
@@ -95,7 +98,6 @@ def update_formula(version: str, wheels: list[WheelInfo]) -> None:
             match wheel.get_type():
                 case WheelType.MACOS_ARM:
                     url, sha, filename = wheel.url, wheel.digest, wheel.filename
-                    print(url)
                     content = re.sub(
                         r'(if Hardware::CPU\.arm\?\n\s+)url "[^"]+"\n\s+sha256 "[^"]+"',
                         f'\\1url "{url}"\n      sha256 "{sha}"',
@@ -130,7 +132,7 @@ def update_formula(version: str, wheels: list[WheelInfo]) -> None:
                         filename,
                         content,
                     )
-                case WheelType.MUSL_LINUX_X86_64:
+                case WheelType.MUSL_LINUX_X86_64 | WheelType.WINDOWS_AMD64:
                     pass
 
     with FORMULA_PATH.open("w") as f:
