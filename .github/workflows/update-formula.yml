@@ -5,8 +5,11 @@ on:
     inputs:
       version:
         description: 'Version to update to (e.g. 0.1.0)'
-        required: true
+        required: false
         type: string
+
+  schedule:
+    - cron: "25 16 * * *"
 
 jobs:
   update-formula:
@@ -23,27 +26,28 @@ jobs:
           version: "0.6.4"
 
       - name: Update formula
+        id: update-formula
         env:
           TARGET_VERSION: ${{ inputs.version }}
-        run: uv run scripts/update_atopile_formula.py
+        run: uv run scripts/update_atopile_formula.py >> "$GITHUB_OUTPUT"
 
       - name: Create branch and commit
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-          git checkout -b "v${{ inputs.version }}"
+          git checkout -b "v${{ steps.update-formula.outputs.version }}"
           git add Formula/atopile.rb
-          git commit -m "atopile ${{ inputs.version }}"
-          git push origin "v${{ inputs.version }}"
+          git commit -m "atopile ${{ steps.update-formula.outputs.version }}"
+          git push origin "v${{ steps.update-formula.outputs.version }}"
 
       - name: Create pull request
         env:
           GH_TOKEN: ${{ secrets.PAT }}
         run: |
           gh pr create \
-            --title "atopile ${{ inputs.version }}" \
-            --body "This PR updates the \`atopile\` formula to version ${{ inputs.version }}.
+            --title "atopile ${{ steps.update-formula.outputs.version }}" \
+            --body "This PR updates the \`atopile\` formula to version ${{ steps.update-formula.outputs.version }}.
 
             This update was automatically triggered by the release workflow." \
             --base main \
-            --head "v${{ inputs.version }}"
+            --head "v${{ steps.update-formula.outputs.version }}"

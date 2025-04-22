@@ -20,21 +20,40 @@ PYPI_JSON_URL = "https://pypi.org/pypi/atopile/json"
 FORMULA_PATH = Path("Formula/atopile.rb")
 PACKAGE_NAME = "atopile"
 PYTHON_VERSION = "cp313-cp313"
+SEMVER_RE = re.compile(
+    r"^(?P<major>\d+)\.(?P<minor>\d+)\.(?P<patch>\d+)(?:\.(?P<prerelease>.*))?$"
+)
 
 UrlInfo = dict[str, Any]
+
+
+def semver_max(version: str) -> tuple[int, ...]:
+    if (match := SEMVER_RE.match(version)) is None:
+        raise ValueError(f"Invalid version: {version}")
+
+    parts = (match.group("major"), match.group("minor"), match.group("patch"))
+    return tuple(map(int, parts))
+
+
+def is_release(version: str) -> bool:
+    if (match := SEMVER_RE.match(version)) is None:
+        raise ValueError(f"Invalid version: {version}")
+
+    return match.group("prerelease") is None
 
 
 def get_latest_version() -> tuple[str, list[UrlInfo]]:
     with requests.get(PYPI_JSON_URL) as response:
         data = response.json()
 
-    if not TARGET_VERSION:
-        raise ValueError("TARGET_VERSION environment variable must be set")
+    if TARGET_VERSION is not None:
+        if TARGET_VERSION not in data["releases"]:
+            raise ValueError(f"Version {TARGET_VERSION} not found in PyPI releases")
 
-    if TARGET_VERSION not in data["releases"]:
-        raise ValueError(f"Version {TARGET_VERSION} not found in PyPI releases")
+        return TARGET_VERSION, data["releases"][TARGET_VERSION]
 
-    return TARGET_VERSION, data["releases"][TARGET_VERSION]
+    latest_version = max(filter(is_release, data["releases"].keys()), key=semver_max)
+    return latest_version, data["releases"][latest_version]
 
 
 class WheelType(Enum):
@@ -141,10 +160,9 @@ def update_formula(version: str, wheels: list[WheelInfo]) -> None:
 
 def main():
     version, release_info = get_latest_version()
-    print(f"Found latest version: {version}")
+    print(f"version={version}")
     wheels = get_wheel_info(release_info)
     update_formula(version, wheels)
-    print("Done! Formula updated successfully.")
 
 
 if __name__ == "__main__":
