@@ -1,0 +1,19 @@
+name: Merge Formula Update
+
+on:
+  pull_request:
+    types: [labeled]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  merge-formula-update:
+    runs-on: ubuntu-latest
+    if: ${{ contains( github.event.pull_request.labels.*.name, 'bump-formula') }}
+    steps:
+      - name: Enable auto-merge
+        run: gh pr merge --auto --squash ${{ github.event.pull_request.number }}
+        env:
+          GH_TOKEN: ${{ secrets.PAT }}

@@ -64,4 +64,5 @@ jobs:
 
             This update was automatically triggered by the release workflow." \
             --base main \
-            --head "v${{ steps.update-formula.outputs.version }}"
+            --head "v${{ steps.update-formula.outputs.version }}" \
+            --label "bump-formula"
