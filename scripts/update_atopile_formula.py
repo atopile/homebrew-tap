@@ -10,7 +10,6 @@ from dataclasses import dataclass
 from enum import Enum
 from pathlib import Path
 import re
-import sys
 from typing import Any
 import requests
 import os
@@ -161,7 +160,7 @@ def update_formula(version: str, wheels: list[WheelInfo]) -> None:
 
 def main():
     version, release_info = get_latest_version()
-    print(version, file=sys.stdout)
+    print(f"version={version}")
     wheels = get_wheel_info(release_info)
     update_formula(version, wheels)
 
