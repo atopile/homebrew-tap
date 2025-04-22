@@ -5,7 +5,7 @@ on:
     inputs:
       version:
         description: 'Version to update to (e.g. 0.1.0)'
-        required: true
+        required: false
         type: string
 
 jobs:
