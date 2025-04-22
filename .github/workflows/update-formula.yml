@@ -8,6 +8,9 @@ on:
         required: false
         type: string
 
+  schedule:
+    - cron: "25 16 * * *"
+
 jobs:
   update-formula:
     runs-on: ubuntu-latest
