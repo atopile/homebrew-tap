@@ -31,7 +31,20 @@ jobs:
           TARGET_VERSION: ${{ inputs.version }}
         run: uv run scripts/update_atopile_formula.py >> "$GITHUB_OUTPUT"
 
+      - name: Check for changes
+        id: check-changes
+        run: |
+          git add Formula/atopile.rb
+          if git diff --staged --quiet; then
+            echo "No changes detected."
+            echo "changes_detected=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "Changes detected."
+            echo "changes_detected=true" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Create branch and commit
+        if: steps.check-changes.outputs.changes_detected == 'true'
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
@@ -41,6 +54,7 @@ jobs:
           git push origin "v${{ steps.update-formula.outputs.version }}"
 
       - name: Create pull request
+        if: steps.check-changes.outputs.changes_detected == 'true'
         env:
           GH_TOKEN: ${{ secrets.PAT }}
         run: |
@@ -50,4 +64,5 @@ jobs:
 
             This update was automatically triggered by the release workflow." \
             --base main \
-            --head "v${{ steps.update-formula.outputs.version }}"
+            --head "v${{ steps.update-formula.outputs.version }}" \
+            --label "bump-formula"
