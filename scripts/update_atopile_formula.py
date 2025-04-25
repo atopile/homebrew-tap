@@ -46,11 +46,13 @@ def get_latest_version() -> tuple[str, list[UrlInfo]]:
     with requests.get(PYPI_JSON_URL) as response:
         data = response.json()
 
-    if TARGET_VERSION is not None:
-        if TARGET_VERSION not in data["releases"]:
-            raise ValueError(f"Version {TARGET_VERSION} not found in PyPI releases")
-
-        return TARGET_VERSION, data["releases"][TARGET_VERSION]
+    if TARGET_VERSION:
+        try:
+            return TARGET_VERSION, data["releases"][TARGET_VERSION]
+        except KeyError as e:
+            raise ValueError(
+                f"Version {TARGET_VERSION} not found in PyPI releases"
+            ) from e
 
     latest_version = max(filter(is_release, data["releases"].keys()), key=semver_max)
     return latest_version, data["releases"][latest_version]
