@@ -3,7 +3,7 @@ class Atopile < Formula
 
   desc "Design circuit boards with code"
   homepage "https://atopile.io"
-  version "0.8.1"
+  version "0.8.2"
   license "MIT"
 
   depends_on "python@3.13"
@@ -11,24 +11,24 @@ class Atopile < Formula
 
   on_macos do
     if Hardware::CPU.arm?
-      url "https://files.pythonhosted.org/packages/e5/21/2581c680b2aad2aa94a7c006ce86a8be49d8835c9a90212e1464f1889d78/atopile-0.8.1-cp313-cp313-macosx_11_0_arm64.whl"
-      sha256 "563ef27a33383012c692ec2234b53f5eddd2b7d478a9f05ce307b215ea90ad6c"
+      url "https://files.pythonhosted.org/packages/96/d6/e24398406af2e8b8867846431328f4b420c4c305dacf2e3f5e76a9b4da17/atopile-0.8.2-cp313-cp313-macosx_11_0_arm64.whl"
+      sha256 "de6fcd117cd8c73048e0bc2618e2de8922c40a6cb67908139999f65e21938e09"
 
       def install
         virtualenv_create(libexec, "python3")
         system "#{libexec}/bin/python", "-m", "pip", "install", \
-          "#{buildpath}/atopile-0.8.1-cp313-cp313-macosx_11_0_arm64.whl"
+          "#{buildpath}/atopile-0.8.2-cp313-cp313-macosx_11_0_arm64.whl"
         bin.install "#{libexec}/bin/ato"
       end
     end
     if Hardware::CPU.intel?
-      url "https://files.pythonhosted.org/packages/2e/6c/e4fa88e524ff265fac76b4bac43667daffd6196eea59a86ca9571a454c95/atopile-0.8.1-cp313-cp313-macosx_10_13_x86_64.whl"
-      sha256 "0c7e816362bd38ac6b350727f24cb3258fb945c199278be73b77d4791b87fbd7"
+      url "https://files.pythonhosted.org/packages/f9/53/a17477ff0b7315fcf2e43c58a0e536902ab392a9b514667964014e68b1ac/atopile-0.8.2-cp313-cp313-macosx_10_13_x86_64.whl"
+      sha256 "5bf6e273963631d2827701b690b8a1d09ed209e0980d1f9826850a2e362c3040"
 
       def install
         virtualenv_create(libexec, "python3")
         system "#{libexec}/bin/python", "-m", "pip", "install", \
-          "#{buildpath}/atopile-0.8.1-cp313-cp313-macosx_10_13_x86_64.whl"
+          "#{buildpath}/atopile-0.8.2-cp313-cp313-macosx_10_13_x86_64.whl"
         bin.install "#{libexec}/bin/ato"
       end
     end
@@ -36,13 +36,13 @@ class Atopile < Formula
 
   on_linux do
     if Hardware::CPU.is_64_bit?
-      url "https://files.pythonhosted.org/packages/65/71/fa74f51936fa854d883b07055af7d97bc77e9cdb08ad12e2e12a47110cdb/atopile-0.8.1-cp313-cp313-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl"
-      sha256 "c64a41203abdbba01b5fd2cb72f6bda88d9d736ee649ccb679c45662566ae3b4"
+      url "https://files.pythonhosted.org/packages/dc/6d/f7a6a1f42122ad2735c24da27d7fed6105b2fcfc468f98e2ba9012942a62/atopile-0.8.2-cp313-cp313-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl"
+      sha256 "8702fb3340058b991e37349d22b16eee99c97441076b8d23225c8d32763ed238"
 
       def install
         virtualenv_create(libexec, "python3")
         system "#{libexec}/bin/python", "-m", "pip", "install", \
-          "#{buildpath}/atopile-0.8.1-cp313-cp313-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl"
+          "#{buildpath}/atopile-0.8.2-cp313-cp313-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl"
         bin.install "#{libexec}/bin/ato"
       end
     end
