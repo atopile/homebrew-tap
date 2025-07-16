@@ -6,6 +6,8 @@ class Atopile < Formula
   version "0.10.11"
   license "MIT"
 
+  depends_on "numpy"
+  depends_on "openblas"
   depends_on "python@3.13"
   uses_from_macos "zlib"
 
