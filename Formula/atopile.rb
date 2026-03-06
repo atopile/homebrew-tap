@@ -18,8 +18,9 @@ class Atopile < Formula
 
       define_method(:install) do
         virtualenv_create(libexec, "python3")
-        system "#{libexec}/bin/python", "-m", "pip", "install", \
-          "#{buildpath}/atopile-0.14.1004-cp314-cp314-macosx_11_0_arm64.whl"
+        whl = "atopile-0.14.1004-cp314-cp314-macosx_11_0_arm64.whl"
+        system "#{libexec}/bin/python", "-m", "pip", "install",
+          "#{buildpath}/#{whl}"
         bin.install "#{libexec}/bin/ato"
       end
     end
@@ -29,8 +30,9 @@ class Atopile < Formula
 
       define_method(:install) do
         virtualenv_create(libexec, "python3")
-        system "#{libexec}/bin/python", "-m", "pip", "install", \
-          "#{buildpath}/atopile-0.14.1004-cp314-cp314-macosx_10_15_x86_64.whl"
+        whl = "atopile-0.14.1004-cp314-cp314-macosx_10_15_x86_64.whl"
+        system "#{libexec}/bin/python", "-m", "pip", "install",
+          "#{buildpath}/#{whl}"
         bin.install "#{libexec}/bin/ato"
       end
     end
@@ -43,8 +45,9 @@ class Atopile < Formula
 
       define_method(:install) do
         virtualenv_create(libexec, "python3")
-        system "#{libexec}/bin/python", "-m", "pip", "install", \
-          "#{buildpath}/atopile-0.14.1004-cp314-cp314-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl"
+        whl = "atopile-0.14.1004-cp314-cp314-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl"
+        system "#{libexec}/bin/python", "-m", "pip", "install",
+          "#{buildpath}/#{whl}"
         bin.install "#{libexec}/bin/ato"
       end
     end
