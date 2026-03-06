@@ -126,8 +126,8 @@ def update_formula(version: str, wheels: list[WheelInfo]) -> None:
                         content,
                     )
                     content = re.sub(
-                        rf"{PACKAGE_NAME}-[^-]+-{PYTHON_VERSION}-macosx_\d+_\d+_arm64\.whl",
-                        filename,
+                        rf'(whl = )"{PACKAGE_NAME}-[^-]+-{PYTHON_VERSION}-macosx_\d+_\d+_arm64\.whl"',
+                        f'\\1"{filename}"',
                         content,
                     )
                 case WheelType.MACOS_INTEL:
@@ -138,8 +138,8 @@ def update_formula(version: str, wheels: list[WheelInfo]) -> None:
                         content,
                     )
                     content = re.sub(
-                        rf"{PACKAGE_NAME}-[^-]+-{PYTHON_VERSION}-macosx_\d+_\d+_x86_64\.whl",
-                        filename,
+                        rf'(whl = )"{PACKAGE_NAME}-[^-]+-{PYTHON_VERSION}-macosx_\d+_\d+_x86_64\.whl"',
+                        f'\\1"{filename}"',
                         content,
                     )
                 case WheelType.LINUX_X86_64:
@@ -150,8 +150,8 @@ def update_formula(version: str, wheels: list[WheelInfo]) -> None:
                         content,
                     )
                     content = re.sub(
-                        rf"{PACKAGE_NAME}-[^-]+-{PYTHON_VERSION}-manylinux\S+_x86_64\.whl",
-                        filename,
+                        rf'(whl = )"{PACKAGE_NAME}-[^-]+-{PYTHON_VERSION}-manylinux\S+_x86_64\.whl"',
+                        f'\\1"{filename}"',
                         content,
                     )
                 case WheelType.MUSL_LINUX_X86_64 | WheelType.WINDOWS_AMD64:
