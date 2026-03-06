@@ -19,7 +19,7 @@ TARGET_VERSION = os.environ.get("TARGET_VERSION")
 PYPI_JSON_URL = "https://pypi.org/pypi/atopile/json"
 FORMULA_PATH = Path("Formula/atopile.rb")
 PACKAGE_NAME = "atopile"
-PYTHON_VERSION = "cp313-cp313"
+PYTHON_VERSION = "cp314-cp314"
 SEMVER_RE = re.compile(
     r"^(?P<major>\d+)\.(?P<minor>\d+)\.(?P<patch>\d+)(?:\.(?P<prerelease>.*))?$"
 )
@@ -96,6 +96,7 @@ def get_wheel_info(release_info: list[UrlInfo]) -> list[WheelInfo]:
         )
         for url_info in release_info
         if url_info["packagetype"] == "bdist_wheel"
+        and f"-{PYTHON_VERSION}-" in url_info["filename"]
     ]
     wheel_types = [wheel.get_type() for wheel in wheels]
 
@@ -125,7 +126,7 @@ def update_formula(version: str, wheels: list[WheelInfo]) -> None:
                         content,
                     )
                     content = re.sub(
-                        rf"{PACKAGE_NAME}-[^-]+-{PYTHON_VERSION}-macosx_11_\d+_arm64\.whl",
+                        rf"{PACKAGE_NAME}-[^-]+-{PYTHON_VERSION}-macosx_\d+_\d+_arm64\.whl",
                         filename,
                         content,
                     )
@@ -137,7 +138,7 @@ def update_formula(version: str, wheels: list[WheelInfo]) -> None:
                         content,
                     )
                     content = re.sub(
-                        rf"{PACKAGE_NAME}-[^-]+-{PYTHON_VERSION}-macosx_10_\d+_x86_64\.whl",
+                        rf"{PACKAGE_NAME}-[^-]+-{PYTHON_VERSION}-macosx_\d+_\d+_x86_64\.whl",
                         filename,
                         content,
                     )
@@ -149,7 +150,7 @@ def update_formula(version: str, wheels: list[WheelInfo]) -> None:
                         content,
                     )
                     content = re.sub(
-                        rf"{PACKAGE_NAME}-[^-]+-{PYTHON_VERSION}-manylinux_\d+_\d+_x86_64\.manylinux_\d+_\d+_x86_64\.whl",
+                        rf"{PACKAGE_NAME}-[^-]+-{PYTHON_VERSION}-manylinux\S+_x86_64\.whl",
                         filename,
                         content,
                     )
